@@ -1,0 +1,45 @@
+import math
+
+list1 = [1,2,3,4,5,6,7,8,9,10]
+list2 = [10,20,30,40,50,60,70,80,90,100]
+print(list1 + list2)
+
+miesiace = ["luty", "styczen", "kwiecien", "grudzien", "listopad"]
+miesiace.sort()
+print(miesiace)
+
+
+def funkcja(lista,litera):
+    var = True
+    for i in lista:
+        if i[0].lower() > litera.lower():
+            var = True
+        else:
+            var = False
+            break
+    if var == True:
+        return lista
+
+nazwiska = ["Kowalski", "nowak", "Wisniewski", "Kaminski", "Lewandowski", "szymanski"]
+print(funkcja(nazwiska,"a"))
+print(funkcja(nazwiska,"Z"))
+
+nazwiska2 = [i for i in nazwiska if len(i)>6]
+print(nazwiska2)
+
+def posortowane(list):
+    temp = list.copy()
+    temp.sort()
+    if list == temp: return True
+    else: return False
+
+list3 = [8,4,1,7,8]
+list4 = [1,2,3]
+list5 = ["a", "b", "c"]
+print(posortowane(list3))
+print(posortowane(list4))
+print(posortowane(list5))
+
+potegi3 = [math.pow(i,3) for i in list3]
+print(potegi3)
+
