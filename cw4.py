@@ -20,4 +20,4 @@ def sprawdz_pesel(pesel):
         rok += 1900
     return f"Data urodzenia: {dzien, miesiac, rok}, płeć: {plec}"
 
-print(sprawdz_pesel("99040402602"))
+print(sprawdz_pesel("990404"))
