@@ -1,0 +1,30 @@
+class Bohater:
+    def __init__(self,imie,zywotnosc, punkty_taktyki):
+        self.imie =imie
+        self.zywotnosc = max(min(zywotnosc,100),0)
+        self.punkty_taktyki =  punkty_taktyki
+
+    def zmien_zywotnosc(self, nowa_zywotnosc):
+        self.zywotnosc = max(min(nowa_zywotnosc, 100), 0)
+
+
+class Lucznik(Bohater):
+    def __init__(self,imie,zywotnosc,zrecznosc,punkty_taktyki):
+        super().__init__(imie,zywotnosc,punkty_taktyki)
+        self.zrecznosc = zrecznosc
+
+    def moc_ataku(self):
+        return self.zrecznosc * self.punkty_taktyki * self.zywotnosc / 100
+
+
+class Wojownik(Bohater):
+    def __init__(self,imie,zywotnosc,sila,punkty_taktyki):
+        super().__init__(imie,zywotnosc,punkty_taktyki)
+        self.sila = sila
+
+    def moc_ataku(self):
+        if self.zywotnosc < 20:
+            mnoznik_zywotnosci = 1.5
+        else:
+            mnoznik_zywotnosci = self.zywotnosc / 100
+        return self.sila * self.punkty_taktyki * self.zywotnosc * mnoznik_zywotnosci/ 100
