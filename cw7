@@ -1,0 +1,61 @@
+class Polynomial:
+    def __init__(self, coeffs):
+        self.coeffs = coeffs
+
+    def __add__(self, other):
+        new_coeffs = []
+        for i in range(max(len(self.coeffs), len(other.coeffs))):
+            if i < len(self.coeffs) and i < len(other.coeffs):
+                new_coeffs.append(self.coeffs[i] + other.coeffs[i])
+            elif i < len(self.coeffs):
+                new_coeffs.append(self.coeffs[i])
+            else:
+                new_coeffs.append(other.coeffs[i])
+        return Polynomial(new_coeffs)
+
+    def __sub__(self, other):
+        new_coeffs = []
+        for i in range(max(len(self.coeffs), len(other.coeffs))):
+            if i < len(self.coeffs) and i < len(other.coeffs):
+                new_coeffs.append(self.coeffs[i] - other.coeffs[i])
+            elif i < len(self.coeffs):
+                new_coeffs.append(self.coeffs[i])
+            else:
+                new_coeffs.append(-other.coeffs[i])
+        return Polynomial(new_coeffs)
+
+    def __str__(self):
+        terms = []
+        for i, coeff in enumerate(self.coeffs):
+            if coeff == 0:
+                continue
+            term = ''
+            if coeff > 0 and i < len(self.coeffs)-1:
+                term += '+'
+            if coeff != 1 and coeff != -1 or i == 0:
+                term += str(coeff)
+            if coeff==-1:
+                term +='-'
+            if i > 0:
+                term += 'x'
+            if i > 1:
+                term += '^' + str(i)
+            terms.append(term)
+        if not terms:
+            return '0'
+        return ' '.join(reversed(terms))
+
+    def degree(self):
+        return len(self.coeffs) - 1
+
+    def __getitem__(self, index):
+        return self.coeffs[index]
+
+
+p1 = Polynomial([3, -2, 1, 4])
+p2 = Polynomial([2, 1])
+print(p1)
+print(p2)
+p3 = p1 + p2
+print(p3)
+p4 = p1 - p2
