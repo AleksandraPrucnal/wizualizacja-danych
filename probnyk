@@ -1,0 +1,120 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+dane = {
+    'Plec': ['M', 'K', 'M', 'M', 'K', 'M', 'K', 'M', 'K', 'M', 'M', 'K', 'K', 'M', 'M', 'K', 'M'],
+    'Wiek': [20, 30, 21, 34, 45, 21, 17, 18, 19, 23, 36, 69, 34, 58, 23, 44, 12],
+    'Miejsce zamieszkania': ['Wieś', 'Miasto', 'Wieś', 'Miasto', 'Wieś', 'Miasto', 'Miasto', 'Miasto', 'Wieś', 'Miasto', 'Miasto', 'Wieś', 'Miasto', 'Miasto', 'Wieś', 'Wieś', 'Miasto'],
+    'Czy pali': [True, True, True, False, False, True, False, False, True, False, False, True, True, True, False, False, False]
+}
+
+Plec = np.array(dane['Plec'])
+Wiek = np.array(dane['Wiek'])
+Miejsce_zamieszkania = np.array(dane['Miejsce zamieszkania'])
+Czy_pali = np.array(dane['Czy pali'])
+
+# Ile osób jest w tabelce? (5%)
+ilosc_osob = len(Plec)
+print(f"Ilość osób w tabelce: {ilosc_osob}")
+
+# Ile jest kobiet? (5%)
+ilosc_kobiet = np.sum(Plec == "K")
+print(f"Ilość kobiet: {ilosc_kobiet}")
+
+# Ile osób w wieku poniżej 40 lat pali? (5%)
+ilosc_palacych_ponizej_40 = np.sum((Wiek < 40) & (Czy_pali == True))
+print(f"Ilość osób w wieku poniżej 40 lat, które palą: {ilosc_palacych_ponizej_40}")
+
+# Gdzie mieszka większość palących kobiet: na wsi czy w mieście? (5%)
+kobiety_palace = (Plec == "K") & (Czy_pali == True)
+mieszkajace_na_wsi = np.sum((Miejsce_zamieszkania == "Wieś") & kobiety_palace)
+mieszkajace_w_miescie = np.sum(
+    (Miejsce_zamieszkania == "Miasto") & kobiety_palace)
+if mieszkajace_na_wsi > mieszkajace_w_miescie:
+    print("Większość palących kobiet mieszka na wsi.")
+elif mieszkajace_na_wsi < mieszkajace_w_miescie:
+    print("Większość palących kobiet mieszka w mieście.")
+else:
+    print("Równa liczba palących kobiet mieszka na wsi i w mieście.")
+
+# Jakie jest średni wiek osób palących, niepalących? (5%)
+sredni_wiek_palacych = np.mean(Wiek[Czy_pali == True])
+sredni_wiek_niepalacych = np.mean(Wiek[Czy_pali == False])
+print(f"Średni wiek osób palących: {sredni_wiek_palacych:.2f}")
+print(f"Średni wiek osób niepalących: {sredni_wiek_niepalacych:.2f}")
+
+# Jakie jest maksymalny wiek osób, mieszkających na wsi? (5%)
+maksymalny_wiek_na_wsi = np.max(Wiek[Miejsce_zamieszkania == "Wieś"])
+print(f"Maksymalny wiek osób mieszkających na wsi: {maksymalny_wiek_na_wsi}")
+
+#
+#STARE
+#
+
+
+
+# %%
+
+x = np.linspace(0, 1, 100)
+y1 = x**2
+y2 = np.sqrt(x)
+
+fig,(ax1, ax2) = plt.subplots(1, 2)
+
+ax1.plot(x, y1, color='darkred')
+ax1.set_title('y = x^2')
+ax2.plot(x, y2, color='navy', linestyle=':')
+ax2.set_title('y = sqrt(x)')
+plt.show()
+
+# %%
+
+df = pd.read_csv('titanic.csv')
+df.head()
+
+# %% [markdown]
+# ### testowy wykres
+
+# %%
+
+sns.pairplot(df)
+plt.show()
+
+# %% [markdown]
+# ### ćw 1.3 - wykresy
+
+# %%
+k_1_klasa_przezyly = df[(df['sex'] == 'female') & (
+    df['pclass'] == 1) & (df['survived'] == 1)]
+print('ile kobiet z 1 klasy przeżyło: ', len(k_1_klasa_przezyly))
+
+m_nieprzezyli_srednia = df[(df['sex'] == 'male') & (
+    df['survived'] == 0)]['age'].mean()
+print('sredni wiek mężczyzn którzy nie przeżyli: ', m_nieprzezyli_srednia)
+
+
+males = df[df['sex'] == 'male']
+females = df[df['sex'] == 'female']
+plt.scatter(males['age'], males['fare'], color='b')
+plt.scatter(females['age'], females['fare'], color='r')
+plt.show()
+
+# %%
+proc_przezyli = df.groupby('pclass')['survived'].mean()*100
+proc_przezyli.plot(kind='bar')
+
+
+# ### ćw 1.4
+
+# %%
+
+iris = sns.load_dataset('iris')
+sns.scatterplot(data=iris, x='petal_length', y='petal_width', hue='sepal_width',
+                style='species', size='sepal_length', sizes=(20, 200), palette='Greens')
+plt.xlabel('Długość płatka')
+plt.ylabel('Szerokość płatka')
+plt.title('Zależność szerokości płatka od długości płatka')
+plt.legend(loc='upper left', bbox_to_anchor=(1.05, 1))
+plt.show()
